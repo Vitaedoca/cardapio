@@ -475,6 +475,192 @@
         </div>
     </footer>
 
+
+    <div class="modal-full" id="modal-Carrinho">
+
+
+
+        <div class="m-header">
+
+            <div class="container">
+                <!-- btn-sm é uma classe que deixa o botão menor
+                float-right alinha ele a direita -->
+                <a class="btn btn-white btn-sm float-right">
+                    Fechar
+                </a>
+
+                <div class="etapas">
+                    <div class="etapa etapa1 active">1</div>
+                    <div class="etapa etapa2 active">2</div>
+                    <div class="etapa etapa3">3</div>
+                </div>
+                <p class="title-carrinho mt-4">
+                    <b id="lblTituloEtap">Seu carrinho:</b>
+                </p>
+            </div>
+        </div>
+
+        <div class="m-body">
+            <div class="container">
+                <div id="itensCarrinho" class="row mr-0 ml-0 hidden">
+                    <div class="col-12 item-carrinho">
+                        <div class="img-produto">
+                            <img src="./img/cardapio/burguers/burger-au-poivre-kit-4-pack.3ca0e39b02db753304cd185638dad518.jpg" alt="">
+                        </div>
+                        <div class="dados-produto">
+                            <p class="title-produto"><b>Gott's Roadside</b></p>
+                            <p class="price-produto"><b>R$ 99,00</b></p>
+                        </div>
+                        <div class="add-carrinho">
+                            <span class="btn-menos"><i class="fas fa-minus"></i></span>
+                            <span class="add-numero-itens">0</span>
+                            <span class="btn-mais"><i class="fas fa-plus"></i></span>
+                            <span class="btn btn-remove"><i class="fa fa-times"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="localEntrega" class="row mr-0 ml-0">
+
+                    <div class="col-4">
+                        <div class="form-group container-cep">
+                            <label for="">CEP:</label>
+                            <input id="txtCEP" type="text" class="form-control">
+                            <a class="btn btn-yellow btn-sm" href=""><i class="fa fa-search"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-8"></div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="">Endereço:</label>
+                            <input id="txtEndereco" type="text" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="">Bairro:</label>
+                            <input id="txtBairro" type="text" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="">Número:</label>
+                            <input id="txtNumero" type="text" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="">Cidade:</label>
+                            <input id="txtCidade" type="text" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="">Complemento:</label>
+                            <input id="txtComplemento" type="text" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="">UF:</label>
+                            <select class="form-control" id="ddlUF">
+                                <option value="-1">...</option>
+                                <option value="AC">AC</option>
+                                <option value="AL">AL</option>
+                                <option value="AP">AP</option>
+                                <option value="AM">AM</option>
+                                <option value="BA">BA</option>
+                                <option value="CE">CE</option>
+                                <option value="DF">DF</option>
+                                <option value="ES">ES</option>
+                                <option value="GO">GO</option>
+                                <option value="MA">MA</option>
+                                <option value="MT">MT</option>
+                                <option value="MS">MS</option>
+                                <option value="MG">MG</option>
+                                <option value="PA">PA</option>
+                                <option value="PB">PB</option>
+                                <option value="PR">PR</option>
+                                <option value="PE">PE</option>
+                                <option value="PI">PI</option>
+                                <option value="RJ">RJ</option>
+                                <option value="RN">RN</option>
+                                <option value="RS">RS</option>
+                                <option value="RO">RO</option>
+                                <option value="RR">RR</option>
+                                <option value="SC">SC</option>
+                                <option value="SP">SP</option>
+                                <option value="SE">SE</option>
+                                <option value="TO">TO</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div id="resumoCarrinho" class="row mr-0 ml-0 hidden">
+
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="m-footer">
+            <div class="container">
+                <div class="container-total text-right mb-4">
+                    <p class="mb-0">
+                        <span>Subtotal:</span>
+                        <span id="lblSubTotal">R$ 198,00</span>
+                    </p>
+                    <p class="mb-0 text-entrega">
+                        <span><i class="fas fa-motorcycle"></i> Entrega:</span>
+                        <span id="lblSubTotal">+ R$ 7,50</span>
+                    </p>
+                    <p class="mb-0 texto-total">
+                        <span class="title-produto"><b>Total:</b></span>
+                        <span class="price-produto" id="lblSubTotal"><b>R$ 205,50</b></span>
+                    </p>
+                </div>
+                <a id="btnEtapaPedido" class="btn btn-yellow float-right">Continuar</a>
+
+                <a id="btnEtapaEndereco" class="btn btn-yellow float-right hidden">Revisar pedido</a>
+
+                <a id="btnEtapaResumo" class="btn btn-yellow float-right hidden">Enviar pedido</a>
+                
+                <a id="btnEtapaVoltar" class="btn btn-white float-right mr-3 hidden">Voltar</a>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <script src="./js/jquery-1.12.4.min.js" type="text/javascript"></script>
     <script src="./js/modernizr-3.5.0.min.js" type="text/javascript"></script>
     <script src="./js/bootstrap.min.js" type="text/javascript"></script>
