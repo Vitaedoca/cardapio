@@ -8,8 +8,19 @@
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/fontawesome.css">
     <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/animate.css">
 </head>
 <body>
+
+    <div class="container-mensagens" id="container-mensagens">
+
+    </div>
+
+    <a class="botao-carrinho hidden" onclick="cardapio.metodos.abrirCarrinho(true)">
+        <div class="badge-total-carrinho">8</div>
+        <i class="fa fa-shopping-bag"></i>
+    </a>
+
     <header class="header">
         <div class="container">
             <nav class="navbar navbar-expand-lg pl-0 pr-0">
@@ -41,10 +52,11 @@
                     </ul>
                     
                     <!-- btn button -->
-                    <a href="" class="btn btn-white btn-icon">
+                    <a class="btn btn-white btn-icon" onclick="cardapio.metodos.abrirCarrinho(true)">
                         Meu carrinho 
                         
                         <span class="icon">
+                            <div class="container-total-carrinho badge-total-carrinho hidden">8</div>
                             <i class="fa fa-shopping-bag"></i>
                         </span>
                         
@@ -182,22 +194,22 @@
                 </div>
 
                 <div class="col-12 container-menu">
-                    <a href="#" onclick="cardapio.metodos.obterItensCardapio('burgers')" id="menu-burgers" class="btn btn-white btn-sm mr-3 mb-3 active">
+                    <a onclick="cardapio.metodos.obterItensCardapio('burgers')" id="menu-burgers" class="btn btn-white btn-sm mr-3 mb-3 active">
                         <i class="fas fa-hamburger"></i>&nbsp; Burgers
                     </a>
-                    <a href="#" onclick="cardapio.metodos.obterItensCardapio('pizzas')" id="menu-pizzas" class="btn btn-white btn-sm mr-3 mb-3">
+                    <a onclick="cardapio.metodos.obterItensCardapio('pizzas')" id="menu-pizzas" class="btn btn-white btn-sm mr-3 mb-3">
                         <i class="fas fa-pizza-slice"></i>&nbsp; Pizzas
                     </a>
-                    <a href="" onclick="cardapio.metodos.obterItensCardapio('churrasco')" id="menu-churrasco" class="btn btn-white btn-sm mr-3 mb-3">
+                    <a onclick="cardapio.metodos.obterItensCardapio('churrasco')" id="menu-churrasco" class="btn btn-white btn-sm mr-3 mb-3">
                         <i class="fas fa-drumstick-bite"></i>&nbsp; Churrasco
                     </a>
-                    <a href="" onclick="cardapio.metodos.obterItensCardapio('steaks')" id="menu-steacks" class="btn btn-white btn-sm mr-3 mb-3">
+                    <a onclick="cardapio.metodos.obterItensCardapio('steaks')" id="menu-steaks" class="btn btn-white btn-sm mr-3 mb-3">
                         <i class="fas fa-bacon"></i>&nbsp; Steaks
                     </a>
-                    <a href="" onclick="cardapio.metodos.obterItensCardapio('bebidas')" id="menu-bebidas" class="btn btn-white btn-sm mr-3 mb-3">
+                    <a onclick="cardapio.metodos.obterItensCardapio('bebidas')" id="menu-bebidas" class="btn btn-white btn-sm mr-3 mb-3">
                         <i class="fas fa-cocktail"></i>&nbsp; Bebidas
                     </a>
-                    <a href="" onclick="cardapio.metodos.obterItensCardapio('sobremesas')" id="menu-sobremesas" class="btn btn-white btn-sm mr-3 mb-3e">
+                    <a onclick="cardapio.metodos.obterItensCardapio('sobremesas')" id="menu-sobremesas" class="btn btn-white btn-sm mr-3 mb-3e">
                         <i class="fas fa-ice-cream"></i>&nbsp; Sobremesas
                     </a>
                 </div>
@@ -209,7 +221,7 @@
                 </div>
 
                 <div class="col-12 text-center">
-                    <a href="#" onclick="cardapio.metodos.verMais()" id="btnVerMais" class="btn btn-white btn-sm">
+                    <a onclick="cardapio.metodos.verMais()" id="btnVerMais" class="btn btn-white btn-sm">
                         Ver mais
                     </a>
                 </div>
@@ -395,22 +407,21 @@
     </footer>
 
 
-    <div class="modal-full hidden" id="modal-Carrinho">
-
+    <div class="modal-full" id="modalCarrinho">
 
         <div class="m-header">
 
             <div class="container">
                 <!-- btn-sm é uma classe que deixa o botão menor
                 float-right alinha ele a direita -->
-                <a class="btn btn-white btn-sm float-right">
+                <a class="btn btn-white btn-sm float-right" onclick="cardapio.metodos.abrirCarrinho(false)">
                     Fechar
                 </a>
 
                 <div class="etapas">
-                    <div class="etapa etapa1 active">1</div>
-                    <div class="etapa etapa2 active">2</div>
-                    <div class="etapa etapa3 active">3</div>
+                    <div class="etapa etapa1">1</div>
+                    <div class="etapa etapa2">2</div>
+                    <div class="etapa etapa3">3</div>
                 </div>
                 <p class="title-carrinho mt-4">
                     <b id="lblTituloEtap">Seu carrinho:</b>
@@ -421,21 +432,6 @@
         <div class="m-body">
             <div class="container">
                 <div id="itensCarrinho" class="row mr-0 ml-0 hidden">
-                    <div class="col-12 item-carrinho">
-                        <div class="img-produto">
-                            <img src="./img/cardapio/burguers/burger-au-poivre-kit-4-pack.3ca0e39b02db753304cd185638dad518.jpg" alt="">
-                        </div>
-                        <div class="dados-produto">
-                            <p class="title-produto"><b>Gott's Roadside</b></p>
-                            <p class="price-produto"><b>R$ 99,00</b></p>
-                        </div>
-                        <div class="add-carrinho">
-                            <span class="btn-menos"><i class="fas fa-minus"></i></span>
-                            <span class="add-numero-itens">0</span>
-                            <span class="btn-mais"><i class="fas fa-plus"></i></span>
-                            <span class="btn btn-remove"><i class="fa fa-times"></i></span>
-                        </div>
-                    </div>
                 </div>
 
                 <div id="localEntrega" class="row mr-0 ml-0 hidden">
@@ -523,7 +519,7 @@
 
                 </div>
 
-                <div id="resumoCarrinho" class="row mr-0 ml-0">
+                <div id="resumoCarrinho" class="row mr-0 ml-0 hidden">
                     <div class="col-12">
                         <p class="title-carrinho mt-4">
                             <b>Itens do pedido:</b>
@@ -554,14 +550,14 @@
                         </div>
                     </div>
                     
-                    <div class="col-12">
+                    <div class="col-12" id="localDaEntrega">
                         <p class="title-carrinho mt-4">
                             <b>Local da entrega:</b>
                         </p>
                         
                     </div>
 
-                        <div class="col-12 item-carrinho resumo">
+                        <div class="col-12 item-carrinho resumo" id="textoLocalDaEntrega">
                             <div class="img-map">
                                 <i class="fas fa-map-marked-alt"></i>
                             </div>
@@ -589,24 +585,24 @@
                 <div class="container-total text-right mb-4">
                     <p class="mb-0">
                         <span>Subtotal:</span>
-                        <span id="lblSubTotal">R$ 198,00</span>
+                        <span id="lblSubTotal">R$ 0,00</span>
                     </p>
                     <p class="mb-0 text-entrega">
                         <span><i class="fas fa-motorcycle"></i> Entrega:</span>
-                        <span id="lblSubTotal">+ R$ 7,50</span>
+                        <span id="lblValorEntrega">+ R$ 0,00</span>
                     </p>
                     <p class="mb-0 texto-total">
                         <span class="title-produto"><b>Total:</b></span>
-                        <span class="price-produto" id="lblSubTotal"><b>R$ 205,50</b></span>
+                        <span class="price-produto"><b id="lblValorTotal">R$ 0,00</b></span>
                     </p>
                 </div>
-                <a id="btnEtapaPedido" class="btn btn-yellow float-right">Continuar</a>
+                <a id="btnEtapaPedido" onclick="cardapio.metodos.carregarEtapa(2)" class="btn btn-yellow float-right">Continuar</a>
 
-                <a id="btnEtapaEndereco" class="btn btn-yellow float-right hidden">Revisar pedido</a>
+                <a id="btnEtapaEndereco" onclick="cardapio.metodos.carregarEtapa(3)" class="btn btn-yellow float-right hidden">Revisar pedido</a>
 
                 <a id="btnEtapaResumo" class="btn btn-yellow float-right hidden">Enviar pedido</a>
                 
-                <a id="btnEtapaVoltar" class="btn btn-white float-right mr-3 hidden">Voltar</a>
+                <a id="btnEtapaVoltar" onclick="cardapio.metodos.voltarEtapa()" class="btn btn-white float-right mr-3 hidden">Voltar</a>
             </div>
         </div>
     </div>
