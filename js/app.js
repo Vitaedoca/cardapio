@@ -5,6 +5,7 @@ $(document).ready(function() {
 let cardapio = {};
 
 let MEU_CARRINHO = [];
+let MEU_ENDERECO = null;
 
 let VALOR_CARRINHO = 0;
 let VALOR_ENTREGA = 5;
@@ -210,6 +211,7 @@ cardapio.metodos = {
             $("#btnEtapaEndereco").addClass('hidden');
             $("#btnEtapaResumo").removeClass('hidden');
             $("#btnVoltar").removeClass('hidden');
+            cardapio.metodos.buscarCep()
         }
     },
     // Botão de voltar etapa
@@ -326,6 +328,153 @@ cardapio.metodos = {
 
 
     },
+    // Carregar a etapa endereços
+    carregarEndereco: () => {
+
+        if(MEU_CARRINHO.length <= 0) {
+            cardapio.metodos.mensagem("Seu carrinho está vazio.");
+            return;
+        }
+
+        cardapio.metodos.carregarEtapa(2)
+    },
+    // API via cep
+    buscarCep: () => {
+
+        // .val() Pega os valores de um input
+        // .trim() tira os espaços em branco
+        // .replace(/\D/g, '') Tira os caracteres diferentes dos números
+        var cep = $("#txtCEP").val().trim().replace(/\D/g, '');
+
+        // verifica se o CEP possui valor informado
+        if (cep != "") {
+
+            // Expressão regular para validar o CEP
+            var validacep = /^[0-9]{8}$/;
+
+            if (validacep.test(cep)) {
+
+                $.getJSON(`https://viacep.com.br/ws/${cep}/json/?callback=?`, (dados) => {
+                    
+
+                    if(!("erro" in dados)) {
+
+                        // Atualizar os campos com os valores retornados
+                        $("#txtEndereco").val(dados.logradouro);
+                        $("#txtBairro").val(dados.bairro);
+                        $("#txtCidade").val(dados.localidade);
+                        $("#ddlUf").val(dados.uf);
+                        $("#txtNumero").focus();
+                        // console.log(dados.uf); 
+                        
+                    }else {
+
+                        cardapio.metodos.mensagem("CEP não encontrato. Preencha as informações manualmente.");
+                        $("#txtEndereco").focus();
+                    }
+
+                });
+
+            }else {
+                cardapio.metodos.mensagem("Formato do CEP inválido");
+                $("#txtCEP").focus();
+            }
+
+        }else {
+            cardapio.metodos.mensagem("Informe o CEP, por favor.");
+            $("#txtCEP").focus();
+        }
+
+    },
+    // Validação antes de prosseguir para a etapa 3
+    resumoPedido: () => {
+
+        // .val() Pega o valor.
+        // .trim() Tira os espaços.
+        let cep = $("#txtCEP").val().trim();
+        let endereco = $("#txtEndereco").val().trim();
+        let bairro = $("#txtBairro").val().trim();
+        let cidade = $("#txtCidade").val().trim();
+        let uf = $("#ddlUf").val();
+        console.log(uf);
+        let numero = $("#txtNumero").val().trim();
+        let complemento = $("#txtComplemento").val().trim();
+
+        if (cep.length <= 0) {
+            cardapio.metodos.mensagem('Informe o CEP, por favor.');
+            $("#txtCEP").focus();
+            return;
+        }
+
+        if (endereco.length <= 0) {
+            cardapio.metodos.mensagem('Informe o Endereço, por favor.');
+            $("#txtEndereco").focus();
+            return;
+        }
+
+        if (bairro.length <= 0) {
+            cardapio.metodos.mensagem('Informe o Bairro, por favor.');
+            $("#txtBairro").focus();
+            return;
+        }
+
+        if (cidade.length <= 0) {
+            cardapio.metodos.mensagem('Informe a Cidade, por favor.');
+            $("#txtCidade").focus();
+            return;
+        }
+
+        if (uf == "-1") {
+            cardapio.metodos.mensagem('Informe a UF, por favor.');
+            $("#ddlUf").focus();
+            return;
+        }
+
+        if (numero.length <= 0) {
+            cardapio.metodos.mensagem('Informe o Número, por favor.');
+            $("#txtNumero").focus();
+            return;
+        }
+
+        MEU_ENDERECO = {
+            cep: cep,
+            endereco: endereco,
+            bairro: bairro,
+            cidade: cidade,
+            uf: uf,
+            numero: numero,
+            complemento: complemento
+        }
+
+        cardapio.metodos.carregarEtapa(3);
+        cardapio.metodos.carregarResumo();
+        
+    },
+
+    carregarResumo: () => {
+
+        $("#listaItensResumo").html("");
+
+        $.each(MEU_CARRINHO, (i, e) => {
+            
+            let temp = cardapio.templates.itemResumo
+            .replace(/\${img}/g, e.img)
+            .replace(/\${name}/g, e.name)
+            .replace(/\${price}/g, e.price.toFixed(2).replace('.', ','))
+            .replace(/\${qntd}/g, e.qntd)
+
+            $("#listaItensResumo").append(temp);
+
+        })
+
+        $("#resumoEndereco").html(`${MEU_ENDERECO.endereco}, ${MEU_ENDERECO.numero}, ${MEU_ENDERECO.bairro} `)
+        $("#cidadeEndereco").html(`${MEU_ENDERECO.cidade}-${MEU_ENDERECO.uf}/${MEU_ENDERECO.cep} ${MEU_ENDERECO.complemento}`)
+
+    },
+    // Envia o pedido pelo whatsapp
+    finalizarPedido: () => {
+
+    },
 
     // Mensagens
     mensagem: (texto, cor = "red", tempo = 3500) => {
@@ -388,6 +537,28 @@ cardapio.templates = {
                 <span class="btn-mais" onclick="cardapio.metodos.aumentarQuantidadeCarrinho('\${id}')"><i class="fas fa-plus"></i></span>
                 <span class="btn btn-remove" onclick="cardapio.metodos.removerItemCarrinho('\${id}')"><i class="fa fa-times"></i></span> 
             </div>
+        </div>
+    `,
+    itemResumo: `
+        <div class="col-12 item-carrinho resumo">
+
+            <div class="img-produto-resumo">
+                <img src="\${img}">
+            </div>
+
+            <div class="dados-produto">
+                <p class="title-produto-resumo">
+                    <b>\${name}</b>
+                </p>
+                <p class="price-produto-resumo">
+                    <b> \${price}</b>
+                </p>
+            </div>
+
+            <p class="quantidade-produto-resumo" id="qntd-resumo-\${id}">
+                x <b>\${qntd}</b>
+            </p>
+
         </div>
     `
 }
