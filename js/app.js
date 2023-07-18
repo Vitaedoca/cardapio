@@ -26,7 +26,6 @@ cardapio.metodos = {
     obterItensCardapio: (categoria = 'burgers', vermais = false) => {
         
         let filtro = MENU[categoria];
-        console.log(filtro);
 
         if(!vermais) {
             $("#itensCardapio").html('');
@@ -36,7 +35,6 @@ cardapio.metodos = {
 
         $.each(filtro, (i, e) => {
 
-            // console.log(e.name)
             // replace = substitui uma string por outra sem mudar a original
             // replace(valorPadrão, substituicao)
             let temp = cardapio.templates.item.replace(/\${img}/g, e.img)
@@ -70,7 +68,6 @@ cardapio.metodos = {
     verMais: () => {
 
         var ativo = $(".container-menu a.active").attr("id").split("menu-")[1];
-        console.log(ativo)
 
         cardapio.metodos.obterItensCardapio(ativo, true);
 
@@ -217,7 +214,6 @@ cardapio.metodos = {
     // Botão de voltar etapa
     voltarEtapa: () => {
         let etapa = $(".etapa.active").length;
-        console.log(etapa)
         cardapio.metodos.carregarEtapa(etapa - 1)
     },
     // Carrega a lista de itens do carrinho
@@ -313,8 +309,6 @@ cardapio.metodos = {
         $("#lblValorEntrega").text("+ R$ 2,00");
         $("#lblValorTotal").text("R$ 0,00");
         
-        // console.log($("#lblSubTotal").text());
-
         $.each(MEU_CARRINHO, (i, e ) => {
             VALOR_CARRINHO += parseFloat(e.price * e.qntd);
 
@@ -365,7 +359,6 @@ cardapio.metodos = {
                         $("#txtCidade").val(dados.localidade);
                         $("#ddlUf").val(dados.uf);
                         $("#txtNumero").focus();
-                        // console.log(dados.uf); 
                         
                     }else {
 
@@ -395,8 +388,7 @@ cardapio.metodos = {
         let endereco = $("#txtEndereco").val().trim();
         let bairro = $("#txtBairro").val().trim();
         let cidade = $("#txtCidade").val().trim();
-        let uf = $("#ddlUf").val();
-        console.log(uf);
+        let uf = $("#ddlUf").val().trim();
         let numero = $("#txtNumero").val().trim();
         let complemento = $("#txtComplemento").val().trim();
 
@@ -470,9 +462,42 @@ cardapio.metodos = {
         $("#resumoEndereco").html(`${MEU_ENDERECO.endereco}, ${MEU_ENDERECO.numero}, ${MEU_ENDERECO.bairro} `)
         $("#cidadeEndereco").html(`${MEU_ENDERECO.cidade}-${MEU_ENDERECO.uf}/${MEU_ENDERECO.cep} ${MEU_ENDERECO.complemento}`)
 
+        cardapio.metodos.finalizarPedido();
     },
-    // Envia o pedido pelo whatsapp
+    // Atualiza o botão do whatsapp
+    // https://wa.me/5534988298258/?text=Olá mundo, eu Amo minha vida
     finalizarPedido: () => {
+
+
+        if(MEU_CARRINHO.length > 0 && MEU_ENDERECO != null) {
+
+    
+
+            var texto = 'Olá! gostaria de fazer um pedido:';
+            texto += `\n*Itens do pedido:*\n\n\${itens}`;
+            texto += '\n*Endereço de entrega:*';
+            texto += `\n${MEU_ENDERECO.endereco}, ${MEU_ENDERECO.numero}, ${MEU_ENDERECO.bairro}`;
+            texto += `\n${MEU_ENDERECO.cidade}-${MEU_ENDERECO.uf} / ${MEU_ENDERECO.cep} ${MEU_ENDERECO.complemento}`;
+            texto += `\n\n*Total (com entrega): R$ ${(VALOR_CARRINHO + VALOR_ENTREGA).toFixed(2).replace('.', ',')}*`;
+
+            let itens = "";
+
+            $.each(MEU_CARRINHO, (i, e) => {
+
+                itens += `*${e.qntd}x ${e.name} ...... R$ ${e.price.toFixed(2).replace(".",",")} \n`
+
+                if((i + 1) == MEU_CARRINHO.length) {
+
+                    texto = texto.replace(/\${itens}/g, itens);
+
+                    // converte a URL
+                    let encode = encodeURI(texto);
+                    let UR = `https://wa.me/5534988298258/?text=${encode}`;
+
+                }
+
+            })
+        }
 
     },
 

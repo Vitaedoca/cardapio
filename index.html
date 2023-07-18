@@ -209,7 +209,7 @@
                     <a onclick="cardapio.metodos.obterItensCardapio('bebidas')" id="menu-bebidas" class="btn btn-white btn-sm mr-3 mb-3">
                         <i class="fas fa-cocktail"></i>&nbsp; Bebidas
                     </a>
-                    <a onclick="cardapio.metodos.obterItensCardapio('sobremesas')" id="menu-sobremesas" class="btn btn-white btn-sm mr-3 mb-3e">
+                    <a onclick="cardapio.metodos.obterItensCardapio('sobremesas')" id="menu-sobremesas" class="btn btn-white btn-sm mr-3 mb-3">
                         <i class="fas fa-ice-cream"></i>&nbsp; Sobremesas
                     </a>
                 </div>
@@ -407,7 +407,7 @@
     </footer>
 
 
-    <div class="modal-full" id="modalCarrinho">
+    <div class="modal-full hidden" id="modalCarrinho">
 
         <div class="m-header">
 
@@ -481,10 +481,10 @@
                         </div>
                     </div>
 
-                    <div class="col-2">
+                    <div class="col-12 col-lg-2 col-md-2 col-sm-12">
                         <div class="form-group">
                             <label>UF:</label>
-                            <select class="form-control" id="ddlUF">
+                            <select id="ddlUf" class="form-control">
                                 <option value="-1">...</option>
                                 <option value="AC">AC</option>
                                 <option value="AL">AL</option>
