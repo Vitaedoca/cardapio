@@ -9,6 +9,7 @@ let MEU_ENDERECO = null;
 
 let VALOR_CARRINHO = 0;
 let VALOR_ENTREGA = 5;
+let CELULAR_EMPRESA = "5534988298258";
 
 
 cardapio.events = {
@@ -492,7 +493,9 @@ cardapio.metodos = {
 
                     // converte a URL
                     let encode = encodeURI(texto);
-                    let UR = `https://wa.me/5534988298258/?text=${encode}`;
+                    let URL = `https://wa.me/${CELULAR_EMPRESA}/?text=${encode}`;
+
+                    $("#btnEtapaResumo").attr("href", URL)
 
                 }
 
