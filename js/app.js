@@ -16,6 +16,8 @@ cardapio.events = {
 
     init: () => {
         cardapio.metodos.obterItensCardapio();
+        cardapio.metodos.carregarBotaoReserva();
+        cardapio.metodos.carregarBotaoReserva();
     }
 
 }
@@ -495,12 +497,61 @@ cardapio.metodos = {
                     let encode = encodeURI(texto);
                     let URL = `https://wa.me/${CELULAR_EMPRESA}/?text=${encode}`;
 
+                    // Define o atributo href do botão do resumo do pedido
                     $("#btnEtapaResumo").attr("href", URL)
 
                 }
 
             })
         }
+
+    },
+    // Carrega o lik do botão de reserva
+    carregarBotaoReserva: () => {
+        
+        let texto = "Olá! gostaria de fazer uma *reserva*";
+
+        let encode = encodeURI(texto);
+
+        let URL = `https://wa.me/${CELULAR_EMPRESA}/?text=${encode}`
+
+        $("#btnReserva").attr("href", URL);
+
+    },
+    // Informa qual o meu botão está ativo e qual card mostrar
+    alternarDepoimentos: (depoimento) => {
+
+    
+        // botões todos sem a classe active
+        $("#btn-depoimento-1").removeClass("active");
+        $("#btn-depoimento-2").removeClass("active");
+        $("#btn-depoimento-3").removeClass("active");
+
+        // Cardis tudos removidos
+        $("#depoimento-1").addClass("hidden");
+        $("#depoimento-2").addClass("hidden");
+        $("#depoimento-3").addClass("hidden");
+
+        // Ativa o botão selecionado
+        // remove hidden do card selecionado
+        $("#btn-depoimento-" + depoimento).addClass("active");
+        $("#depoimento-" + depoimento).removeClass("hidden");
+
+
+    },
+
+    //Carrega botão de ligar
+    carregaLigacao: () => {
+
+        $("#btn-ligar").attr("href", `tel:${CELULAR_EMPRESA}`);
+
+    },
+    // Carrega Botão do whatsapp
+    carregarBotaoDoWhatsapp: () => {
+
+        let URL = `https://wa.me/${CELULAR_EMPRESA}`
+
+        $("#btn-whatasapp").attr("href", URL);
 
     },
 
@@ -531,7 +582,7 @@ cardapio.metodos = {
 cardapio.templates = {
     item: `
         <div class="col-3">
-            <div class="card card-item mb-5" id="\${id}">
+            <div class="card card-item mb-5 animated fadeInUp" id="\${id}">
                 <div class="img-produto">
                     <img src="\${img}" alt="">
                 </div>

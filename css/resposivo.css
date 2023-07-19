@@ -1,0 +1,9 @@
+@media (max-width: 767px) {
+    
+
+  
+    .col-one {
+        padding-left: 35px !important;
+        padding-right: 35px !important;
+    }
+}
